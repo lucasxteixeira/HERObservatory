@@ -81,8 +81,8 @@ ui = fluidPage(
     "body {font-family: 'Source Sans Pro'}"
   ),
 
-  title = 'Impact of Academic Production in Development of Countries',
-    titlePanel("Impact of Academic Production in Development of Countries"),
+  title = 'Impact of Academic Production in the Development of Countries',
+    titlePanel("Impact of Academic Production in the Development of Countries"),
     sidebarLayout(
         sidebarPanel(
             radioButtons("xvar", label = "X Variable",
