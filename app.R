@@ -6,15 +6,11 @@ library(googleCharts)
 variables <- c("Country", "Year", "IDPT", "IM", "AFR", "BR", 
     "DR", "GDP", "HEP", "MR", "NoOfPatents", "hindex", "NoOfDocs", 
     "Region", "ID")
-data <- read.csv("data.csv")
+data <- read.csv("data.csv", stringsAsFactors = TRUE, na.strings=c("NA","NaN", "", " ", NULL))
 data <- data[, variables]
-data$Region <- as.factor(data$Region)
 data$Year <- as.numeric(data$Year)
 
-ylim <- list(
-  min = min(data$IDPT,na.rm=TRUE) - 50,
-  max = max(data$IDPT,na.rm=TRUE) + 50
-)
+
 
 server = function(input, output, session) {
 
@@ -36,7 +32,7 @@ server = function(input, output, session) {
     df <- data %>%
       filter(Year == input$year) %>%
       select(Country, eval(parse(text = input$xvar)), eval(parse(text = input$yvar)),
-        Region, hindex) %>%
+        Region, NoOfDocs) %>%
       arrange(Region)
   })
 
@@ -72,32 +68,33 @@ ui = fluidPage(
   # This line loads the Google Charts JS library
   googleChartsInit(),
 
-  # Use the Google webfont "Source Sans Pro"
-  tags$link(
-    href=paste0("http://fonts.googleapis.com/css?",
-                "family=Source+Sans+Pro:300,600,300italic"),
-    rel="stylesheet", type="text/css"),
-  tags$style(type="text/css",
-    "body {font-family: 'Source Sans Pro'}"
+  title = 'HER-Observatory',
+  fluidRow(
+      shiny::column(4, offset = 1,
+          img(src="logo.jpg", width="100%")
+      )
   ),
 
-  title = 'Impact of Academic Production in the Development of Countries',
-    titlePanel("Impact of Academic Production in the Development of Countries"),
     sidebarLayout(
         sidebarPanel(
-            radioButtons("xvar", label = "X Variable",
-                choices = list("NoOfPatents" = "NoOfPatents", "NoOfDocs" = "NoOfDocs"), selected = "NoOfPatents"
+            radioButtons("xvar", label = "Latent Variables",
+                choices = list("Country's number of articles (h) that have received at least h citations" = "hindex"), selected = "hindex"
             ),
-            radioButtons("yvar", label = "Y Variable",
-                choices = list("IDPT" = "IDPT", "IM" = "IM",
-                    "AFR" = "AFR", "BR" = "BR", "DR" = "DR",
-                    "GDP" = "GDP", "HEP" = "HEP"," MR" = "MR"), selected = "IDPT"
+            radioButtons("yvar", label = "Observed Variables",
+                choices = list("Immunization DPT (% of children ages 12 - 23 months)" = "IDPT", 
+                  "Immunization measles (% of children ages 12 - 24 months)" = "IM",
+                    "Adolescent fertility rate (births per 1,000 women ages 15-19)" = "AFR", 
+                    "Birth rate, crude (per 1,000 people)" = "BR", 
+                    "Death rate, crude (per 1,000 people)" = "DR",
+                    "GDP per capita (current US$)" = "GDP", 
+                    "Health expenditure public (% of total health expenditure)" = "HEP",
+                    "Mortality rate, infant (per 1,000 live births)" = "MR"), selected = "IDPT"
             ),
             sliderInput("year", "Year",
                 min = min(data$Year), max = max(data$Year),
                 value = min(data$Year), animate = TRUE
             ),
-            h5("Created by ", a(href="https://github.com/lucasxteixeira", target="_blank", "Lucas de Oliveira Teixeira"), align = "right")
+            h5("Developed by ", a(href="https://github.com/lucasxteixeira", target="_blank", "Lucas de Oliveira Teixeira"), align = "right")
         ),
         mainPanel(
             googleBubbleChart("chart",
