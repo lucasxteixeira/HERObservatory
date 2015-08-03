@@ -67,7 +67,7 @@ server = function(input, output, session) {
 
 }
 
-ui = fluidPage( 
+ui = fluidPage(  
 
   # This line loads the Google Charts JS library
   googleChartsInit(),
