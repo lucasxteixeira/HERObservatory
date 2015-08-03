@@ -65,15 +65,17 @@ server = function(input, output, session) {
 
 ui = fluidPage(  
 
-  # This line loads the Google Charts JS library
-  googleChartsInit(),
+    # This line loads the Google Charts JS library
+    googleChartsInit(),
 
-  title = 'HER-Observatory',
-  fluidRow(
-      shiny::column(4, offset = 1,
-          img(src="logo.jpg", width="100%")
-      )
-  ),
+    title = 'HER-Observatory',
+    fluidRow(
+         shiny::column(6, offset = 2,
+            a(href="https://herobservatory.wordpress.com/",
+                img(src="logo.jpg", width="100%")
+            )
+        )
+    ),
 
     sidebarLayout(
         sidebarPanel(
@@ -81,14 +83,16 @@ ui = fluidPage(
                 choices = list("Country's number of articles (h) that have received at least h citations" = "hindex"), selected = "hindex"
             ),
             radioButtons("yvar", label = "Observed Variables",
-                choices = list("Immunization DPT (% of children ages 12 - 23 months)" = "IDPT", 
-                  "Immunization measles (% of children ages 12 - 24 months)" = "IM",
+                choices = list(
                     "Adolescent fertility rate (births per 1,000 women ages 15-19)" = "AFR", 
                     "Birth rate, crude (per 1,000 people)" = "BR", 
                     "Death rate, crude (per 1,000 people)" = "DR",
                     "GDP per capita (current US$)" = "GDP", 
                     "Health expenditure public (% of total health expenditure)" = "HEP",
-                    "Mortality rate, infant (per 1,000 live births)" = "MR"), selected = "IDPT"
+                    "Mortality rate, infant (per 1,000 live births)" = "MR",
+                    "Immunization DPT (% of children ages 12 - 23 months)" = "IDPT", 
+                    "Immunization measles (% of children ages 12 - 24 months)" = "IM"),
+                selected = "IDPT"
             ),
             sliderInput("year", "Year",
                 min = min(data$Year), max = max(data$Year),
