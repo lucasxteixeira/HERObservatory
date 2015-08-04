@@ -68,10 +68,10 @@ ui = fluidPage(
     # This line loads the Google Charts JS library
     googleChartsInit(),
 
-    title = 'HER-Observatory',
+    title = 'HER Observatory',
     fluidRow(
          shiny::column(6, offset = 2,
-            a(href="https://herobservatory.wordpress.com/",
+            a(href="https://herobservatory.wordpress.com/", target="_blank",
                 img(src="logo.jpg", width="100%")
             )
         )
@@ -92,7 +92,7 @@ ui = fluidPage(
                     "Mortality rate, infant (per 1,000 live births)" = "MR",
                     "Immunization DPT (% of children ages 12 - 23 months)" = "IDPT", 
                     "Immunization measles (% of children ages 12 - 24 months)" = "IM"),
-                selected = "IDPT"
+                selected = "AFR"
             ),
             sliderInput("year", "Year",
                 min = min(data$Year), max = max(data$Year),
