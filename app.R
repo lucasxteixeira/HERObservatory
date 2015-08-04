@@ -63,7 +63,9 @@ server = function(input, output, session) {
 
 }
 
-ui = fluidPage(  
+ui = fluidPage(
+
+    tags$head(tags$link(rel="shortcut icon", href="favicon.ico")),
 
     # This line loads the Google Charts JS library
     googleChartsInit(),
