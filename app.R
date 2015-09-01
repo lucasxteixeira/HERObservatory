@@ -72,7 +72,7 @@ ui = fluidPage(
 
     title = 'HER Observatory',
     fluidRow(
-         shiny::column(6, offset = 2,
+        shiny::column(6, offset = 2,
             a(href="https://herobservatory.wordpress.com/", target="_blank",
                 img(src="logo.jpg", width="100%")
             )
@@ -139,7 +139,15 @@ ui = fluidPage(
                 )
             )
         )
+    ),
+
+    fluidRow(
+        shiny::column(12, 
+            h2("The data will be updated shortly. Please check back later"),
+            align = "center"
+        )
     )
+
 )
 
 shinyApp( ui = ui, server = server )
