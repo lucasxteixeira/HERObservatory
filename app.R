@@ -4,8 +4,8 @@ library(googleCharts)
 
 
 variables <- c("Country", "Year", "IDPT", "IM", "AFR", "BR", 
-    "DR", "GDP", "HEP", "MR", "NoOfPatents", "hindex", "NoOfDocs", 
-    "Region", "ID")
+    "DR", "GDP", "HEP", "HET", "PSE", "MR", "NoOfPatents", "hindex", "NoOfDocs", 
+    "Region")
 data <- read.csv("data.csv", stringsAsFactors = TRUE, na.strings=c("NA","NaN", "", " ", NULL))
 data <- data[, variables]
 data$Year <- as.numeric(data$Year)
@@ -91,6 +91,7 @@ ui = fluidPage(
                     "Death rate, crude (per 1,000 people)" = "DR",
                     "GDP per capita (current US$)" = "GDP", 
                     "Health expenditure public (% of total health expenditure)" = "HEP",
+                    "Public spending on education, total (% of govt expenditure)" = "PSE",
                     "Mortality rate, infant (per 1,000 live births)" = "MR",
                     "Immunization DPT (% of children ages 12 - 23 months)" = "IDPT", 
                     "Immunization measles (% of children ages 12 - 24 months)" = "IM"),
@@ -138,13 +139,6 @@ ui = fluidPage(
                     )
                 )
             )
-        )
-    ),
-
-    fluidRow(
-        shiny::column(12, 
-            h2("The data will be updated shortly. Please check back later"),
-            align = "center"
         )
     )
 
